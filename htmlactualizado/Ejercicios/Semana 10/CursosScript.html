@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <form>
+    <div class="mb-3">
+      <label for="Curso" class="form-label">Curso</label>
+      <input type="text" id="Curso" name="Curso" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="Creditos" class="form-label">Creditos</label>
+      <input type="text" id="Creditos" name="Creditos" class="form-control" required>
+    </div>
+    <button type="button" class="btn btn-info mt-2">Eliminar Curso</button>
+    <button type="button" class="btn btn-info mt-2">Añadir Curso</button>
+<script>
+
+("add-field").click(function(){
+fieldCount++;
+var newField = `<div class="form-group">
+                <div class="card-body">
+                   <label for="input-${fieldCount}"> Campo${fieldCount}</label>
+                   <input type="text" class="form-control" id="input-${fieldCount}">
+                   </div>`;
+
+                   $("#dynamic-form").append(newField);
+
+                });
+
+
+
+
+
+</script>
+
+</body>
+</html>
