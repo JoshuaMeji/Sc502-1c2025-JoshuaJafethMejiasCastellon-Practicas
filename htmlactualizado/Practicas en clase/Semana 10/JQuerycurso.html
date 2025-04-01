@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrar Cursos</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <form id="courseForm">
+    <div class="mb-3">
+      <label for="Curso" class="form-label">Curso</label>
+      <input type="text" id="Curso" name="Curso" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="Creditos" class="form-label">Creditos</label>
+      <input type="number" id="Creditos" name="Creditos" class="form-control credits" required>
+    </div>
+    <button type="button" id="addCourse" class="btn btn-info mt-2">Añadir Curso</button>
+    <div id="courseList"></div>
+    <p>Total de Créditos: <span id="totalcredits">0</span></p>
+  </form>
+
+  <script>
+    $(document).ready(function(){
+      // Función para actualizar el total de créditos
+      function updateTotalCredits(){
+        let totalcredits = 0;
+        $(".credits").each(function(){
+          totalcredits += Number($(this).val()) || 0;
+        });
+        $('#totalcredits').text(totalcredits);
+      }
+
+      // Añadir un nuevo curso
+      $('#addCourse').click(function(){
+        $('#courseList').append(`
+          <div class="course">
+            <div class="mb-3">
+              <label class="form-label">Curso</label>
+              <input type="text" name="Curso" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Creditos</label>
+              <input type="number" name="Creditos" class="form-control credits" required>
+            </div>
+            <button type="button" class="btn btn-danger removecourse">Eliminar Curso</button>
+          </div>
+        `);
+      });
+
+      // Eliminar un curso
+      $(document).on("click", ".removecourse", function() {
+        $(this).parent().remove();
+        updateTotalCredits();
+      });
+
+      // Actualizar créditos en tiempo real
+      $(document).on("input", ".credits", function() {
+        updateTotalCredits();
+      });
+    });
+  </script>
+</body>
+</html>

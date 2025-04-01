@@ -1,51 +1,42 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estado de Cuenta - Dashboard</title>
-    <link rel="stylesheet" href="./CSS/Style.css">
+  <?php
 
-</head>
-<body>
-    <div class="container">
-        <h1>Estado de Cuenta de Tarjeta de Crédito</h1>
-        
-        <div class="card">
-            <div class="card-header">Transacciones Registradas</div>
-            <ul class="list-group">
-                <?php
-                $transacciones = [
-                    ['id' => 1, 'descripcion' => 'Compra en supermercado', 'monto' => 150.00],
-                    ['id' => 2, 'descripcion' => 'Pago de factura de teléfono', 'monto' => 200.00],
-                    ['id' => 3, 'descripcion' => 'Compra en tienda online', 'monto' => 300.00]
-                ];
+$transacciones = [
+  ["Id" => "01", "Descripcion" => "Clases extra", "Monto" => 10000],
+  ["Id" => "02", "Descripcion" => "Uber", "Monto" => 5000]
+];
 
-                $totalContado = 0;
-                foreach ($transacciones as $transaccion) {
-                    echo '<li class="list-group-item">';
-                    echo 'ID: ' . $transaccion['id'] . ' | ' . $transaccion['descripcion'] . ' | Monto: $' . number_format($transaccion['monto'], 2);
-                    echo '</li>';
-                    $totalContado += $transaccion['monto'];
-                }
+// link= https://www.php.net/manual/es/language.types.array.php
 
-                $interes = 2.6 / 100;
-                $totalConInteres = $totalContado * (1 + $interes);
-                $cashback = $totalContado * 0.1 / 100;
-                $montoFinal = $totalConInteres - $cashback;
-                ?>
-            </ul>
-        </div>
+function registrarTransaccion($transacciones, $ID, $Descripcion, $Monto) {
+  array_push($transacciones,"03" => $ID, "Mantenimiento" => $Descripcion, "80000" => $Monto);
+  print_r($transacciones);
+}
 
-        <div class="card">
-            <div class="card-header">Resumen del Estado de Cuenta</div>
-            <div>
-                <p>Monto Total de Contado: $<?php echo number_format($totalContado, 2); ?></p>
-                <p>Monto Total con Interés (2.6%): $<?php echo number_format($totalConInteres, 2); ?></p>
-                <p>Cashback (0.1%): $<?php echo number_format($cashback, 2); ?></p>
-                <p><strong>Monto Final a Pagar: $<?php echo number_format($montoFinal, 2); ?></strong></p>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+// links= https://www.php.net/manual/es/functions.user-defined.php y https://www.php.net/manual/en/function.array-push.php
+
+
+function generarEstadoDeCuenta($transacciones) {
+  $total = 0;
+
+  foreach ($transacciones as $transaccion) {
+    $detalle .= "ID: {$transaccion['id']}, Descripción: {$transaccion['descripcion']}, Monto: {$transaccion['monto']}\n";
+    $totalContado += $transaccion['monto'];
+}
+
+$interes = $totalContado * 0.026;       
+$totalConInteres = $totalContado + $interes;
+$cashback = $totalContado * 0.001;           
+$montoFinal = $totalConInteres - $cashback;
+
+file_put_contents("estado_cuenta.txt", $transacciones);
+
+}
+
+// link= https://www.php.net/manual/es/control-structures.foreach.php y https://www.php.net/manual/es/function.file-put-contents.php
+
+registrarTransaccion(1, "Compra 1", 100.00);
+registrarTransaccion(2, "Compra 2", 200.00);
+registrarTransaccion(3, "Compra 3", 150.00);
+  ?>
+
+ 
