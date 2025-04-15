@@ -1,0 +1,9 @@
+CREATE DATABASE wishlist_db;
+
+USE wishlist_db;
+
+CREATE TABLE wishes (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  descripcion VARCHAR(255) NOT NULL,
+  fecha DATETIME DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrar Cursos</title>
+</head>
+<body>
+  <form id="courseForm">
+    <div class="mb-3">
+      <label for="Curso" class="form-label">Curso</label>
+      <input type="text" id="Curso" name="Curso" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="Creditos" class="form-label">Creditos</label>
+      <input type="number" id="Creditos" name="Creditos" class="form-control credits" required>
+    </div>
+    <button type="button" id="addcourse" class="btn btn-info mt-2">Añadir Curso</button>
+    <div id="courselist"></div>
+    <p>Total de Créditos: <span id="totalcredits">0</span></p>
+  </form>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const courseList = document.getElementById("courselist");
+      const totalCreditsSpan = document.getElementById("totalcredits");
+      const addCourseButton = document.getElementById("addcourse");
+
+      function updateTotalCredits() {
+        const creditsInputs = document.querySelectorAll(".credits");
+        let totalCredits = 0;
+
+        creditsInputs.forEach(function(input) {
+          totalCredits += Number(input.value) || 0;
+        });
+
+        totalCreditsSpan.textContent = totalCredits;
+      }
+
+      addCourseButton.addEventListener("click", function() {
+        const newCourseDiv = document.createElement("div");
+        newCourseDiv.classList.add("course");
+
+        newCourseDiv.innerHTML = `
+          <div class="mb-3">
+            <label class="form-label">Curso</label>
+            <input type="text" name="Curso" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Creditos</label>
+            <input type="number" name="Creditos" class="form-control credits" required>
+          </div>
+          <button type="button" class="btn btn-danger removecourse">Eliminar Curso</button>
+        `;
+
+        courseList.appendChild(newCourseDiv);
+
+        newCourseDiv.addEventListener("input", updateTotalCredits);
+
+        newCourseDiv.querySelector(".removecourse").addEventListener("click", function() {
+          newCourseDiv.remove();
+          updateTotalCredits();
+        });
+      });
+
+      document.getElementById("courseForm").addEventListener("input", updateTotalCredits);
+    });
+  </script>
+</body>
+</html>
